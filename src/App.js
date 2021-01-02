@@ -1,24 +1,34 @@
-import logo from './logo.svg';
+import { useState } from 'react';
 import './App.css';
+import { Switch, Route } from 'react-router-dom';
+import Navbar from './components/Navbar';
+import Footer from './components/Footer';
+
+import Home from './pages/index';
+import About from './pages/about';
+import Menu from './pages/menu';
+import Contact from './pages/contact';
+import Dropdown from './components/Dropdown';
 
 function App() {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleToggle = () => {
+    setIsOpen(!isOpen);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Navbar toggle={handleToggle} />
+      <Dropdown isOpen={isOpen} toggle={handleToggle} />
+      <Switch>
+        <Route path='/' exact component={Home} />
+        <Route path='/about' component={About} />
+        <Route path='/menu' component={Menu} />
+        <Route path='/contact' component={Contact} />
+      </Switch>
+      <Footer />
+    </>
   );
 }
 
